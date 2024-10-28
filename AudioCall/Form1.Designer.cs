@@ -5,7 +5,7 @@ using System;
 namespace AudioCallApp
 {
     partial class Form1
-    { //Hoa
+    {
         private System.ComponentModel.IContainer components = null;
         private Button btnConnect;
         private Button btnEndCall;
@@ -18,16 +18,6 @@ namespace AudioCallApp
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
         }
-
-        private void InitializeComponent()
-        {
-            //Hoa
-        }   
     }
 }

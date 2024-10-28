@@ -27,7 +27,7 @@ namespace AudioCallApp
             InitializeAudioControls();
         }
 
-        //Hoa
+
         private void InitializeAudioControls()
         {
             btnTalk.Enabled = false;
@@ -43,7 +43,6 @@ namespace AudioCallApp
             volumeSlider.Enabled = false;
         }
 
-        //HOA
         private async void btnConnect_Click(object sender, EventArgs e)
         {
             if (!isConnected)
@@ -58,28 +57,9 @@ namespace AudioCallApp
                     else
                         await StartClientAsync();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Connection error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    statusLabel.Text = "Connection failed";
-                    btnConnect.Enabled = true;
-                    return;
-                }
+
+
             }
         }
-
-
-        //Hoa
-        private void btnTalk_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (isConnected)
-            {
-                isMuted = true;
-                waveIn.StopRecording();
-                btnTalk.BackColor = Color.LightGray;
-                statusLabel.Text = "Connected";
-            }
-        }
-
     }
 }
