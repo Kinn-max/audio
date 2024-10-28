@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{35C7B405-47EB-4225-BCED-CB2E6411712F}|AudioCall2.csproj|C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35C7B405-47EB-4225-BCED-CB2E6411712F}|AudioCall2.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35C7B405-47EB-4225-BCED-CB2E6411712F}|AudioCall2.csproj|c:\\users\\anhoa\\onedrive\\m\u00E1y t\u00EDnh\\audiocall2\\audiocall\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35C7B405-47EB-4225-BCED-CB2E6411712F}|AudioCall2.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{35C7B405-47EB-4225-BCED-CB2E6411712F}|AudioCall2.csproj|C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{35C7B405-47EB-4225-BCED-CB2E6411712F}|AudioCall2.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T01:11:44.121Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\Form1.Designer.cs",
+              "RelativeToolTip": "Form1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T01:10:54.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\anhoa\\OneDrive\\M\u00E1y t\u00EDnh\\AudioCall2\\AudioCall\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwFQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-24T01:10:25.613Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
