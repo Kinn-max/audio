@@ -196,7 +196,11 @@ namespace AudioCallApp
                 waveIn = new WaveInEvent();
                 waveIn.WaveFormat = new WaveFormat(44100, 1); // 44.1kHz, Mono
                 waveIn.DataAvailable += OnDataAvailable;  // Sự kiện khi có dữ liệu âm thanh
-                waveFileWriter = new WaveFileWriter("recordedAudio.wav", waveIn.WaveFormat);
+
+                // Tạo tên file ghi âm mới dựa trên thời gian hiện tại
+                string fileName = $"recordedAudio_{DateTime.Now:ddMMyyyy_HHmmss}.wav"; //Dinh dang file ghi am
+                waveFileWriter = new WaveFileWriter(fileName, waveIn.WaveFormat); //Tao file ghi am 
+
                 waveIn.StartRecording();  // Bắt đầu thu âm
                 isRecording = true;  // Đánh dấu đang ghi âm
 
