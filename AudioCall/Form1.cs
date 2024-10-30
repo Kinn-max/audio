@@ -21,7 +21,7 @@ namespace AudioCallApp
         private WaveInEvent waveIn;
         private WaveFileWriter waveFileWriter;
 
-        
+        private bool isRecording = false;  // Thêm biến để theo dõi trạng thái ghi âm
 
 
         public Form1()
@@ -190,15 +190,36 @@ namespace AudioCallApp
 
         private void btnTalk_Click(object sender, EventArgs e)
         {
-            if (waveIn == null)
+            if (!isRecording)
             {
+                // Bắt đầu ghi âm
                 waveIn = new WaveInEvent();
                 waveIn.WaveFormat = new WaveFormat(44100, 1); // 44.1kHz, Mono
                 waveIn.DataAvailable += OnDataAvailable;  // Sự kiện khi có dữ liệu âm thanh
                 waveFileWriter = new WaveFileWriter("recordedAudio.wav", waveIn.WaveFormat);
                 waveIn.StartRecording();  // Bắt đầu thu âm
+                isRecording = true;  // Đánh dấu đang ghi âm
 
                 statusLabel.Text = "Talking...";  // Cập nhật trạng thái
+                btnTalk.Text = "Stop Talking";   // Đổi tên nút thành "Stop Talking"
+            }
+            else
+            {
+                // Dừng ghi âm
+                waveIn.StopRecording();
+                waveIn.Dispose();
+                waveIn = null;
+
+                if (waveFileWriter != null)
+                {
+                    waveFileWriter.Dispose();
+                    waveFileWriter = null;
+                }
+
+                isRecording = false;  // Đánh dấu đã dừng ghi âm
+
+                statusLabel.Text = "Stopped talking.";  // Cập nhật trạng thái
+                btnTalk.Text = "Talk";  // Đổi tên nút lại thành "Talk"
             }
         }
 
