@@ -49,6 +49,21 @@ namespace AudioCallApp
 
             rbServer.Checked = true; // Mặc định là chế độ server
             isServer = true;
+
+            // Bật/tắt micVolumeSlider nếu có logic xử lý
+            micVolumeSlider.Minimum = 0;
+            micVolumeSlider.Maximum = 100;
+            micVolumeSlider.Value = 50;
+            micVolumeSlider.Enabled = true;
+            micVolumeSlider.ValueChanged += MicVolumeSlider_ValueChanged;
+        }
+
+        private float micVolume = 0.5f;  // Mặc định là 50%
+
+        private void MicVolumeSlider_ValueChanged(object sender, EventArgs e)
+        {
+            micVolume = micVolumeSlider.Value / 100f;  // Chuyển đổi giá trị từ 0-100 thành 0.0-1.0
+            statusLabel.Text = $"Mic Volume: {micVolumeSlider.Value}%";  // Cập nhật trạng thái hiển thị âm lượng mic
         }
 
         // Hàm xử lý sự kiện thay đổi âm lượng
@@ -250,6 +265,17 @@ namespace AudioCallApp
         {
             try
             {
+                byte[] buffer = e.Buffer; //khởi tạo buffer là một mảng byte chứa dữ liệu âm thanh từ mic, lấy từ e.buffer
+                int bytesRecorded = e.BytesRecorded; //số byte thực tế đã lưu lại lấy từ e.BytesRecorded
+
+                // Điều chỉnh âm lượng của mic dựa trên giá trị của micVolume trước khi gửi dữ liệu qua mạng hoặc ghi lại.
+                for (int i = 0; i < bytesRecorded; i += 2)//Mỗi lần lặp, i tăng lên 2, vì mỗi mẫu âm thanh 16-bit chiếm 2 byte trong buffer.
+                {
+                    short sample = BitConverter.ToInt16(buffer, i);//mỗi mẫu âm thanh (sample) trong buffer là một giá trị số nguyên 16 bit do WaveFormat được thiết lập 44.1kHz, 16-bit
+                    sample = (short)(sample * micVolume);//Điều chỉnh mức âm lượng của sample
+                    BitConverter.GetBytes(sample).CopyTo(buffer, i); //chuyển đổi lại giá trị sample đã điều chỉnh thành mảng byte[]
+                }
+
                 if (stream != null && stream.CanWrite)
                 {
                     stream.Write(e.Buffer, 0, e.BytesRecorded); // Gửi dữ liệu âm thanh qua mạng
