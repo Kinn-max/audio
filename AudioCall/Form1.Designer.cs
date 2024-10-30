@@ -29,21 +29,108 @@ namespace AudioCallApp
 
         private void InitializeComponent()
         {
-            // Khởi tạo các control và đặt các thuộc tính của chúng
-
-            this.components = new System.ComponentModel.Container();
-            this.btnConnect = new Button();
-            this.btnEndCall = new Button();
-            this.btnTalk = new Button();
-            this.txtServerIP = new TextBox();
-            this.lblServerIP = new Label();
-            this.statusLabel = new Label();
-            this.volumeSlider = new TrackBar();
-            this.lblVolume = new Label();
-            this.rbServer = new RadioButton();
-            this.rbClient = new RadioButton();
-
+            this.btnConnect = new System.Windows.Forms.Button();
+            this.btnEndCall = new System.Windows.Forms.Button();
+            this.btnTalk = new System.Windows.Forms.Button();
+            this.txtServerIP = new System.Windows.Forms.TextBox();
+            this.lblServerIP = new System.Windows.Forms.Label();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.volumeSlider = new System.Windows.Forms.TrackBar();
+            this.lblVolume = new System.Windows.Forms.Label();
+            this.rbServer = new System.Windows.Forms.RadioButton();
+            this.rbClient = new System.Windows.Forms.RadioButton();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeSlider)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(20, 20);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(100, 30);
+            this.btnConnect.TabIndex = 0;
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // btnEndCall
+            // 
+            this.btnEndCall.Location = new System.Drawing.Point(20, 60);
+            this.btnEndCall.Name = "btnEndCall";
+            this.btnEndCall.Size = new System.Drawing.Size(100, 30);
+            this.btnEndCall.TabIndex = 1;
+            this.btnEndCall.Text = "End Call";
+            this.btnEndCall.Click += new System.EventHandler(this.btnEndCall_Click);
+            // 
+            // btnTalk
+            // 
+            this.btnTalk.Location = new System.Drawing.Point(193, 150);
+            this.btnTalk.Name = "btnTalk";
+            this.btnTalk.Size = new System.Drawing.Size(110, 61);
+            this.btnTalk.TabIndex = 2;
+            this.btnTalk.Text = "Talk";
+            this.btnTalk.Click += new System.EventHandler(this.btnTalk_Click);
+            // 
+            // txtServerIP
+            // 
+            this.txtServerIP.Location = new System.Drawing.Point(150, 60);
+            this.txtServerIP.Name = "txtServerIP";
+            this.txtServerIP.Size = new System.Drawing.Size(200, 22);
+            this.txtServerIP.TabIndex = 3;
+            // 
+            // lblServerIP
+            // 
+            this.lblServerIP.Location = new System.Drawing.Point(150, 27);
+            this.lblServerIP.Name = "lblServerIP";
+            this.lblServerIP.Size = new System.Drawing.Size(100, 30);
+            this.lblServerIP.TabIndex = 4;
+            this.lblServerIP.Text = "Server IP:";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Location = new System.Drawing.Point(17, 106);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(200, 30);
+            this.statusLabel.TabIndex = 5;
+            this.statusLabel.Text = "Status: Disconnected";
+            // 
+            // volumeSlider
+            // 
+            this.volumeSlider.Location = new System.Drawing.Point(150, 217);
+            this.volumeSlider.Maximum = 100;
+            this.volumeSlider.Name = "volumeSlider";
+            this.volumeSlider.Size = new System.Drawing.Size(200, 56);
+            this.volumeSlider.TabIndex = 6;
+            this.volumeSlider.Value = 50;
+            // 
+            // lblVolume
+            // 
+            this.lblVolume.Location = new System.Drawing.Point(12, 227);
+            this.lblVolume.Name = "lblVolume";
+            this.lblVolume.Size = new System.Drawing.Size(100, 30);
+            this.lblVolume.TabIndex = 7;
+            this.lblVolume.Text = "Volume";
+            // 
+            // rbServer
+            // 
+            this.rbServer.Checked = true;
+            this.rbServer.Location = new System.Drawing.Point(20, 150);
+            this.rbServer.Name = "rbServer";
+            this.rbServer.Size = new System.Drawing.Size(100, 30);
+            this.rbServer.TabIndex = 8;
+            this.rbServer.TabStop = true;
+            this.rbServer.Text = "Server";
+            this.rbServer.CheckedChanged += new System.EventHandler(this.rbServer_CheckedChanged);
+            // 
+            // rbClient
+            // 
+            this.rbClient.Location = new System.Drawing.Point(20, 183);
+            this.rbClient.Name = "rbClient";
+            this.rbClient.Size = new System.Drawing.Size(100, 30);
+            this.rbClient.TabIndex = 9;
+            this.rbClient.Text = "Client";
+            this.rbClient.CheckedChanged += new System.EventHandler(this.rbClient_CheckedChanged);
+            // 
             // Form1
+            // 
             this.ClientSize = new System.Drawing.Size(400, 300);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.btnEndCall);
@@ -55,66 +142,12 @@ namespace AudioCallApp
             this.Controls.Add(this.lblVolume);
             this.Controls.Add(this.rbServer);
             this.Controls.Add(this.rbClient);
+            this.Name = "Form1";
             this.Text = "Audio Call App";
-
-            // btnConnect
-            this.btnConnect.Location = new Point(20, 20);
-            this.btnConnect.Size = new Size(100, 30);
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.Click += new EventHandler(this.btnConnect_Click);
-
-            // btnEndCall
-            this.btnEndCall.Location = new Point(20, 60);
-            this.btnEndCall.Size = new Size(100, 30);
-            this.btnEndCall.Text = "End Call";
-            this.btnEndCall.Click += new EventHandler(this.btnEndCall_Click);
-
-            // btnTalk
-            this.btnTalk.Location = new Point(20, 100);
-            this.btnTalk.Size = new Size(100, 30);
-            this.btnTalk.Text = "Talk";
-            this.btnTalk.Click += new EventHandler(this.btnTalk_Click);
-
-            // txtServerIP
-            this.txtServerIP.Location = new Point(150, 20);
-            this.txtServerIP.Size = new Size(200, 30);
-
-            // lblServerIP
-            this.lblServerIP.Location = new Point(150, 60);
-            this.lblServerIP.Size = new Size(100, 30);
-            this.lblServerIP.Text = "Server IP:";
-
-            // statusLabel
-            this.statusLabel.Location = new Point(150, 100);
-            this.statusLabel.Size = new Size(200, 30);
-            this.statusLabel.Text = "Status: Disconnected";
-
-            // volumeSlider
-            this.volumeSlider.Location = new Point(150, 140);
-            this.volumeSlider.Size = new Size(200, 45);
-            this.volumeSlider.Minimum = 0;
-            this.volumeSlider.Maximum = 100;
-            this.volumeSlider.Value = 50;
-
-            // lblVolume
-            this.lblVolume.Location = new Point(150, 190);
-            this.lblVolume.Size = new Size(100, 30);
-            this.lblVolume.Text = "Volume";
-
-            // RadioButton Server
-            this.rbServer.Location = new Point(20, 150);
-            this.rbServer.Size = new Size(100, 30);
-            this.rbServer.Text = "Server";
-            this.rbServer.Checked = true; // Mặc định là server
-            this.rbServer.CheckedChanged += new EventHandler(this.rbServer_CheckedChanged); // Gán sự kiện đã định nghĩa trong Form1.cs
-
-            // RadioButton Client
-            this.rbClient.Location = new Point(130, 150);
-            this.rbClient.Size = new Size(100, 30);
-            this.rbClient.Text = "Client";
-            this.rbClient.CheckedChanged += new EventHandler(this.rbClient_CheckedChanged); // Gán sự kiện đã định nghĩa trong Form1.cs
-
             ((System.ComponentModel.ISupportInitialize)(this.volumeSlider)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
     }
 }

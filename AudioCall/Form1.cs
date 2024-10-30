@@ -88,6 +88,63 @@ namespace AudioCallApp
             StartListeningForAudio();  // Bắt đầu lắng nghe âm thanh
         }
 
+        private void SetupSuccessfulConnection()
+        {
+            isConnected = true;
+            btnConnect.Enabled = false;
+            btnEndCall.Enabled = true;
+            btnTalk.Enabled = true;
+            volumeSlider.Enabled = true;
+            txtServerIP.Enabled = false;
+
+            InitializeAudioDevices();
+            StartReceivingAudio();
+        }
+
+        private void InitializeAudioDevices()
+        {
+            try
+            {
+                // Setup audio input với WaveInEvent
+                waveIn = new WaveInEvent
+                {
+                    WaveFormat = new WaveFormat(44100, 1) // Thiết lập định dạng âm thanh
+                };
+                waveIn.DataAvailable += WaveIn_DataAvailable;
+
+                // Setup audio output
+                waveOut = new WaveOut();
+                waveProvider = new BufferedWaveProvider(new WaveFormat(44100, 1));
+                waveOut.Init(waveProvider);
+                waveOut.Volume = volumeSlider.Value / 100f;
+                waveOut.Play();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing audio devices: {ex.Message}", "Audio Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            try
+            {
+                if (stream != null && stream.CanWrite && !isMuted)
+                {
+                    stream.Write(e.Buffer, 0, e.BytesRecorded);
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    statusLabel.Text = $"Audio sending error: {ex.Message}";
+                });
+            }
+        }
+
 
         private async void btnConnect_Click(object sender, EventArgs e)
         {
@@ -125,6 +182,8 @@ namespace AudioCallApp
             isConnected = false;
             btnTalk.Enabled = false;
             btnEndCall.Enabled = false;
+            waveIn?.StopRecording(); // Tắt ghi âm
+            waveIn?.Dispose();       // Giải phóng tài nguyên
         }
         private void StartListeningForAudio()
         {
@@ -166,6 +225,12 @@ namespace AudioCallApp
                 waveIn.DataAvailable += OnDataAvailable;  // Sự kiện khi có dữ liệu âm thanh
                 waveIn.StartRecording();  // Bắt đầu thu âm
 
+                statusLabel.Text = "Talking...";  // Cập nhật trạng thái
+            }
+
+            if (waveIn != null && !isMuted)
+            {
+                waveIn.StartRecording();
                 statusLabel.Text = "Talking...";  // Cập nhật trạng thái
             }
         }
