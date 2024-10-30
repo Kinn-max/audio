@@ -20,12 +20,53 @@ namespace AudioCallApp
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                // Giải phóng tài nguyên âm thanh và các đối tượng liên quan
+                if (waveFileWriter != null)
+                {
+                    waveFileWriter.Dispose();
+                    waveFileWriter = null;
+                }
+
+                if (waveIn != null)
+                {
+                    waveIn.Dispose();
+                    waveIn = null;
+                }
+
+                if (waveOut != null)
+                {
+                    waveOut.Dispose();
+                    waveOut = null;
+                }
+
+                if (stream != null)
+                {
+                    stream.Close();
+                    stream = null;
+                }
+
+                if (client != null)
+                {
+                    client.Close();
+                    client = null;
+                }
+
+                if (server != null)
+                {
+                    server.Stop();
+                    server = null;
+                }
             }
             base.Dispose(disposing);
         }
+
 
         private void InitializeComponent()
         {
@@ -62,23 +103,23 @@ namespace AudioCallApp
             // 
             // btnTalk
             // 
-            this.btnTalk.Location = new System.Drawing.Point(193, 150);
+            this.btnTalk.Location = new System.Drawing.Point(20, 100);
             this.btnTalk.Name = "btnTalk";
-            this.btnTalk.Size = new System.Drawing.Size(110, 61);
+            this.btnTalk.Size = new System.Drawing.Size(100, 30);
             this.btnTalk.TabIndex = 2;
             this.btnTalk.Text = "Talk";
             this.btnTalk.Click += new System.EventHandler(this.btnTalk_Click);
             // 
             // txtServerIP
             // 
-            this.txtServerIP.Location = new System.Drawing.Point(150, 60);
+            this.txtServerIP.Location = new System.Drawing.Point(150, 20);
             this.txtServerIP.Name = "txtServerIP";
-            this.txtServerIP.Size = new System.Drawing.Size(200, 22);
+            this.txtServerIP.Size = new System.Drawing.Size(200, 29);
             this.txtServerIP.TabIndex = 3;
             // 
             // lblServerIP
             // 
-            this.lblServerIP.Location = new System.Drawing.Point(150, 27);
+            this.lblServerIP.Location = new System.Drawing.Point(150, 60);
             this.lblServerIP.Name = "lblServerIP";
             this.lblServerIP.Size = new System.Drawing.Size(100, 30);
             this.lblServerIP.TabIndex = 4;
@@ -86,7 +127,7 @@ namespace AudioCallApp
             // 
             // statusLabel
             // 
-            this.statusLabel.Location = new System.Drawing.Point(17, 106);
+            this.statusLabel.Location = new System.Drawing.Point(150, 100);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(200, 30);
             this.statusLabel.TabIndex = 5;
@@ -94,16 +135,16 @@ namespace AudioCallApp
             // 
             // volumeSlider
             // 
-            this.volumeSlider.Location = new System.Drawing.Point(150, 217);
+            this.volumeSlider.Location = new System.Drawing.Point(150, 140);
             this.volumeSlider.Maximum = 100;
             this.volumeSlider.Name = "volumeSlider";
-            this.volumeSlider.Size = new System.Drawing.Size(200, 56);
+            this.volumeSlider.Size = new System.Drawing.Size(200, 80);
             this.volumeSlider.TabIndex = 6;
             this.volumeSlider.Value = 50;
             // 
             // lblVolume
             // 
-            this.lblVolume.Location = new System.Drawing.Point(12, 227);
+            this.lblVolume.Location = new System.Drawing.Point(150, 190);
             this.lblVolume.Name = "lblVolume";
             this.lblVolume.Size = new System.Drawing.Size(100, 30);
             this.lblVolume.TabIndex = 7;
@@ -122,7 +163,7 @@ namespace AudioCallApp
             // 
             // rbClient
             // 
-            this.rbClient.Location = new System.Drawing.Point(20, 183);
+            this.rbClient.Location = new System.Drawing.Point(20, 201);
             this.rbClient.Name = "rbClient";
             this.rbClient.Size = new System.Drawing.Size(100, 30);
             this.rbClient.TabIndex = 9;

@@ -15,13 +15,15 @@ namespace AudioCallApp
         private NetworkStream stream;
         private bool isServer;  // Dùng để kiểm tra xem người dùng là server hay client
         private bool isConnected = false;
-        
+
         private WaveOut waveOut;
         private BufferedWaveProvider waveProvider;
         private WaveInEvent waveIn;
+        private WaveFileWriter waveFileWriter;
+
+        
 
 
-        private bool isMuted = true;
         public Form1()
         {
             InitializeComponent();
@@ -30,7 +32,7 @@ namespace AudioCallApp
 
         private void InitializeAudioControls()
         {
-            btnTalk.Enabled = false;  // Giữ lại nếu sau này bạn muốn thêm chức năng thu âm
+            btnTalk.Enabled = false;
             btnEndCall.Enabled = false;
             btnConnect.BackColor = Color.LightGreen;
             btnEndCall.BackColor = Color.LightPink;
@@ -47,7 +49,6 @@ namespace AudioCallApp
             isServer = true;
         }
 
-        // Xóa các phương thức trùng lặp và giữ lại định nghĩa duy nhất:
         private void rbServer_CheckedChanged(object sender, EventArgs e)
         {
             if (rbServer.Checked)
@@ -88,64 +89,6 @@ namespace AudioCallApp
             StartListeningForAudio();  // Bắt đầu lắng nghe âm thanh
         }
 
-        private void SetupSuccessfulConnection()
-        {
-            isConnected = true;
-            btnConnect.Enabled = false;
-            btnEndCall.Enabled = true;
-            btnTalk.Enabled = true;
-            volumeSlider.Enabled = true;
-            txtServerIP.Enabled = false;
-
-            InitializeAudioDevices();
-            StartReceivingAudio();
-        }
-
-        private void InitializeAudioDevices()
-        {
-            try
-            {
-                // Setup audio input với WaveInEvent
-                waveIn = new WaveInEvent
-                {
-                    WaveFormat = new WaveFormat(44100, 1) // Thiết lập định dạng âm thanh
-                };
-                waveIn.DataAvailable += WaveIn_DataAvailable;
-
-                // Setup audio output
-                waveOut = new WaveOut();
-                waveProvider = new BufferedWaveProvider(new WaveFormat(44100, 1));
-                waveOut.Init(waveProvider);
-                waveOut.Volume = volumeSlider.Value / 100f;
-                waveOut.Play();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error initializing audio devices: {ex.Message}", "Audio Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-        private void WaveIn_DataAvailable(object sender, WaveInEventArgs e)
-        {
-            try
-            {
-                if (stream != null && stream.CanWrite && !isMuted)
-                {
-                    stream.Write(e.Buffer, 0, e.BytesRecorded);
-                }
-            }
-            catch (Exception ex)
-            {
-                this.Invoke((MethodInvoker)delegate
-                {
-                    statusLabel.Text = $"Audio sending error: {ex.Message}";
-                });
-            }
-        }
-
-
         private async void btnConnect_Click(object sender, EventArgs e)
         {
             if (!isConnected)
@@ -173,8 +116,6 @@ namespace AudioCallApp
             }
         }
 
-
-        // Định nghĩa các sự kiện Click cho các nút để tránh lỗi:
         private void btnEndCall_Click(object sender, EventArgs e)
         {
             // Logic để kết thúc cuộc gọi
@@ -182,9 +123,41 @@ namespace AudioCallApp
             isConnected = false;
             btnTalk.Enabled = false;
             btnEndCall.Enabled = false;
-            waveIn?.StopRecording(); // Tắt ghi âm
-            waveIn?.Dispose();       // Giải phóng tài nguyên
+
+            // Dừng ghi âm và đóng file
+            if (waveIn != null)
+            {
+                waveIn.StopRecording();
+                waveIn.Dispose();
+                waveIn = null;
+            }
+
+            if (waveFileWriter != null)
+            {
+                waveFileWriter.Dispose();
+                waveFileWriter = null;
+            }
+
+            // Đóng stream nếu có
+            if (stream != null)
+            {
+                stream.Close();
+                stream = null;
+            }
+
+            if (client != null)
+            {
+                client.Close();
+                client = null;
+            }
+
+            if (server != null)
+            {
+                server.Stop();
+                server = null;
+            }
         }
+
         private void StartListeningForAudio()
         {
             waveProvider = new BufferedWaveProvider(new WaveFormat(44100, 1));
@@ -215,7 +188,6 @@ namespace AudioCallApp
             });
         }
 
-
         private void btnTalk_Click(object sender, EventArgs e)
         {
             if (waveIn == null)
@@ -223,19 +195,13 @@ namespace AudioCallApp
                 waveIn = new WaveInEvent();
                 waveIn.WaveFormat = new WaveFormat(44100, 1); // 44.1kHz, Mono
                 waveIn.DataAvailable += OnDataAvailable;  // Sự kiện khi có dữ liệu âm thanh
+                waveFileWriter = new WaveFileWriter("recordedAudio.wav", waveIn.WaveFormat);
                 waveIn.StartRecording();  // Bắt đầu thu âm
 
                 statusLabel.Text = "Talking...";  // Cập nhật trạng thái
             }
-
-            if (waveIn != null && !isMuted)
-            {
-                waveIn.StartRecording();
-                statusLabel.Text = "Talking...";  // Cập nhật trạng thái
-            }
         }
 
-        // Sự kiện khi có dữ liệu âm thanh (khi đang thu âm)
         private void OnDataAvailable(object sender, WaveInEventArgs e)
         {
             try
@@ -245,12 +211,20 @@ namespace AudioCallApp
                 {
                     stream.Write(e.Buffer, 0, e.BytesRecorded);
                 }
+
+                if (waveFileWriter != null)
+                {
+                    waveFileWriter.Write(e.Buffer, 0, e.BytesRecorded);
+                    waveFileWriter.Flush();
+                }
             }
             catch (Exception ex)
             {
-                statusLabel.Text = $"Error while sending audio: {ex.Message}";
+                statusLabel.Text = $"Error while sending/recording audio: {ex.Message}";
             }
         }
 
+        // Đảm bảo giải phóng tài nguyên khi form đóng
+       
     }
 }
